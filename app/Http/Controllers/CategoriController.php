@@ -65,16 +65,28 @@ class CategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categori $categori)
+    public function update(Request $request, $id)
     {
         //
+        $categori= Categori::find($id);
+        $categori->namakategori = $request->namakategori;
+        $categori->description = $request->description;
+        if($categori->save()){
+            return response()->json($categori);
+        }else {
+            return response()->json('gagal save');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categori $categori)
+    public function destroy($id)
     {
         //
+        $categori= Categori::find($id);
+        $categori->delete();
+        //respose json
+        return response()->json($categori);
     }
 }
