@@ -39,7 +39,33 @@ class CrudController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $this->validate($request, [
+            'nameproduct' => 'required',
+            'price'=>'required',
+        ]);
+        //insert data
+        $crud = new Crud;
+        //if nameproduct is same
+
+        // if( $crud->nameproduct == strtoupper($request->nameproduct)){
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Data sudah ada',
+        //     ]);
+        // }else{
+        //     $crud->nameproduct = $request->nameproduct;
+        // }
+        $crud->nameproduct  = $request->nameproduct;
+        $crud->price = $request->price;
+        $crud->save();
+        return response()->json([
+            'success' => true,
+            'data' => $crud,
+
+        ]);
+
+
     }
 
     /**
@@ -61,9 +87,24 @@ class CrudController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Crud $crud)
+    public function update(Request $request, $id)
     {
-        //
+        //inisialisasi id
+        $crud = Crud::find($id);
+        $crud->nameproduct = $request->nameproduct;
+        $crud->price = $request->price;
+
+        if ($crud->save()) {
+            return response()->json([
+                'success' => true,
+                'data' => $crud,
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Data gagal diubah',
+            ]);
+        }
     }
 
     /**
