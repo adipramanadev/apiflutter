@@ -32,3 +32,5 @@ Route::get('get-crud',[App\Http\Controllers\CrudController::class, 'index'])->na
 Route::post('store-crud',[App\Http\Controllers\CrudController::class, 'store'])->name('crud.store');
 Route::delete('destroy-crud/{id}', [App\Http\Controllers\CrudController::class, 'destroy'])->name('crud.destroy');
 Route::put('put-crud/{id}', [App\Http\Controllers\CrudController::class, 'update'])->name('crud.update');
+
+Route::post('register-user', [App\Http\Controllers\Api\AuthController::class, 'register']);
