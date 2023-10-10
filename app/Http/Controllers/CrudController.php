@@ -97,6 +97,7 @@ class CrudController extends Controller
         if ($crud->save()) {
             return response()->json([
                 'success' => true,
+                'msg'=>'Data berhasil diubah',
                 'data' => $crud,
             ]);
         }else{
