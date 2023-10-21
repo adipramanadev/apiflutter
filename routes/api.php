@@ -34,3 +34,6 @@ Route::delete('destroy-crud/{id}', [App\Http\Controllers\CrudController::class, 
 Route::put('put-crud/{id}', [App\Http\Controllers\CrudController::class, 'update'])->name('crud.update');
 
 Route::post('register-user', [App\Http\Controllers\Api\AuthController::class, 'register']);
+Route::post('login-user', [App\Http\Controllers\Api\AuthController::class, 'login']);
+
+Route::get('get-jurusan', [App\Http\Controllers\JurusanController::class,'index'])->name('jurusan.index');

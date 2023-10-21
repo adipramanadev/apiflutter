@@ -10,33 +10,35 @@ use Carbon\Carbon;
 class PresensiController extends Controller
 {
         //getPresensi
-        public function getPresensi(){
-            //membaca data presensi yang dimiliki user
-        $presensi = Presensi::where('user_id',Auth::user()->id)->get(); //array,
-        //select * from presensi where user_id = uid
-        //membaca pengulangan data presensi lalu menampilkan hari ini
-        foreach ($presensi as $key) {
-            if($key->tanggal == date('Y-m-d')){
-                $key->is_hari_ini = true;
-            }else{
-                $key->is_hari_ini = false;
+        function getPresensis()
+    {
+        $presensis = Presensi::where('user_id', Auth::user()->id)->get();
+        foreach($presensis as $item) {
+            if ($item->tanggal == date('Y-m-d')) {
+                $item->is_hari_ini = true;
+            } else {
+                $item->is_hari_ini = false;
             }
+            $datetime = Carbon::parse($item->tanggal)->locale('id');
+            $masuk = Carbon::parse($item->masuk)->locale('id');
+            $pulang = Carbon::parse($item->pulang)->locale('id');
 
-            $datetime = Carbon::parse($key->tanggal)->locale('id');
-            $masuk = Carbon::parse($key->masuk)->locale('id');
-            $pulang = Carbon::parse($key->pulang)->locale('id');
+            $datetime->settings(['formatFunction' => 'translatedFormat']);
+            $masuk->settings(['formatFunction' => 'translatedFormat']);
+            $pulang->settings(['formatFunction' => 'translatedFormat']);
 
-            $key->tanggal = $datetime->translatedFormat('l, d F Y');
-            $key->masuk = $masuk->translatedFormat('H:i');
-            $key->pulang = $pulang->translatedFormat('H:i');
+            $item->tanggal = $datetime->format('l, j F Y');
+            $item->masuk = $masuk->format('H:i');
+            $item->pulang = $pulang->format('H:i');
         }
 
-        //mengembalikan data presensi bentuk json
         return response()->json([
-            'success'=>true,
-            'data'=>$presensi,
-            'message'=>'Sukses mendapatkan data presensi'
+            'success' => true,
+            'data' => $presensis,
+            'message' => 'Sukses menampilkan data'
         ]);
+
+
     }
 
 }
