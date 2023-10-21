@@ -48,34 +48,23 @@ class AuthController extends Controller
     //function login
     public function login(Request $request)
     {
-        //validasi
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        //jika validasi gagal
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+        if (!Auth::attempt($request->only('email', 'password')))
+        {
+            return response()
+                ->json(['message' => 'Unauthorized'], 401);
         }
-        //Auth::attempt
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
-        }
-        $user  = User::where('email', $request->email)->firstOrFail();
+
+        $user = User::where('email', $request['email'])->firstOrFail();
+
         $token = $user->createToken('auth_token')->plainTextToken;
         $user->token = $token;
         $user->token_type = 'Bearer';
-        return response()->json([
-            'message' => 'Hi'.$user->name.', Selamat Datang Di Sistem Presensi',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'data'=> $user
 
-        ]);
+        return response()
+            ->json([
+                'success' => true,
+                'message' => 'Hi '.$user->name.', selamat datang di sistem presensi',
+                'data' => $user
+            ]);
     }
 }
