@@ -17,8 +17,8 @@ return new class extends Migration
             $table->decimal('latitude', 12,5);
             $table->decimal('longitude', 12,5);
             $table->date('tanggal');
-            $table->time('jam_masuk');
-            $table->time('jam_keluar');
+            $table->time('masuk');
+            $table->time('pulang');
             $table->timestamps();
         });
     }

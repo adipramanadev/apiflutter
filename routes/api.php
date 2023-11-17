@@ -18,15 +18,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('get-hello', function () {
+Route::get('/', function () {
     return response()->json(
-        ['message' => 'Hello World!']
+        ['message' => 'This its API Absensi V1.0'],
     );
 });
 
 //route apiPresensi
-Route::get('get-Presensi',
-       [App\Http\Controllers\Api\PresensiController::class, 'getPresensi']);
+
 
 Route::get('get-crud',[App\Http\Controllers\CrudController::class, 'index'])->name('crud.index');
 Route::post('store-crud',[App\Http\Controllers\CrudController::class, 'store'])->name('crud.store');
@@ -37,3 +36,7 @@ Route::post('register-user', [App\Http\Controllers\Api\AuthController::class, 'r
 Route::post('login-user', [App\Http\Controllers\Api\AuthController::class, 'login']);
 
 Route::get('get-jurusan', [App\Http\Controllers\JurusanController::class,'index'])->name('jurusan.index');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('get-Presensi', [App\Http\Controllers\Api\PresensiController::class, 'getPresensis']);
+    Route::post('save-presensi', [App\Http\Controllers\API\PresensiController::class, 'savePresensi']);
+});
