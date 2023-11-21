@@ -16,9 +16,9 @@ return new class extends Migration
             $table->integer('user_id');
             $table->decimal('latitude', 12,5);
             $table->decimal('longitude', 12,5);
-            $table->date('tanggal');
-            $table->time('masuk');
-            $table->time('pulang');
+            $table->date('tanggal')->nullable();
+            $table->time('masuk')->nullable();
+            $table->time('pulang')->nullable();
             $table->timestamps();
         });
     }

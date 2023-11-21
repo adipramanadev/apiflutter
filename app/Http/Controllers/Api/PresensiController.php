@@ -13,6 +13,10 @@ date_default_timezone_set("Asia/Jakarta");
 
 class PresensiController extends Controller
 {
+        //middleware
+        function  __construct(){
+            $this->middleware('auth:sanctum');
+        }
         //getPresensi
         function  getPresensis()
         {
@@ -45,35 +49,66 @@ class PresensiController extends Controller
 
         }
 
+        // function savePresensi(Request $request)
+        //     {
+        //         $keterangan = "";
+        //         $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
+        //                         ->where('user_id', Auth::user()->id)
+        //                         ->first();
+        //         if ($presensi == null) {
+        //             $presensi = Presensi::create([
+        //                 'user_id' => Auth::user()->id,
+        //                 'latitude' => $request->latitude,
+        //                 'longitude' => $request->longitude,
+        //                 'tanggal' => date('Y-m-d'),
+        //                 'masuk' => date('H:i:s')
+        //             ]);
+        //         } else {
+        //             $data = [
+        //                 'pulang' => date('H:i:s')
+        //             ];
+
+        //             Presensi::whereDate('tanggal', '=', date('Y-m-d'))->update($data);
+
+        //         }
+        //         $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
+        //                 ->first();
+
+        //         return response()->json([
+        //             'success' => true,
+        //             'data' => $presensi,
+        //             'message' => 'Sukses simpan'
+        //         ]);
+        //     }
         function savePresensi(Request $request)
-            {
-                $keterangan = "";
-                $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
-                                ->where('user_id', Auth::user()->id)
-                                ->first();
-                if ($presensi == null) {
-                    $presensi = Presensi::create([
-                        'user_id' => Auth::user()->id,
-                        'latitude' => $request->latitude,
-                        'longitude' => $request->longitude,
-                        'tanggal' => date('Y-m-d'),
-                        'masuk' => date('H:i:s')
-                    ]);
-                } else {
-                    $data = [
-                        'pulang' => date('H:i:s')
-                    ];
-
-                    Presensi::whereDate('tanggal', '=', date('Y-m-d'))->update($data);
-
-                }
-                $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
+    {
+        $keterangan = "";
+        $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
+                        ->where('user_id', Auth::user()->id)
                         ->first();
+        if ($presensi == null) {
+            $presensi = Presensi::create([
+                'user_id' => Auth::user()->id,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'tanggal' => date('Y-m-d'),
+                'masuk' => date('H:i:s')
+            ]);
+        } else {
+            $data = [
+                'pulang' => date('H:i:s')
+            ];
 
-                return response()->json([
-                    'success' => true,
-                    'data' => $presensi,
-                    'message' => 'Sukses simpan'
-                ]);
-            }
+            Presensi::whereDate('tanggal', '=', date('Y-m-d'))->update($data);
+
+        }
+        $presensi = Presensi::whereDate('tanggal', '=', date('Y-m-d'))
+                 ->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $presensi,
+            'message' => 'Sukses simpan'
+        ]);
+    }
 }

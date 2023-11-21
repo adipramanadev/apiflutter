@@ -32,11 +32,12 @@ Route::post('store-crud',[App\Http\Controllers\CrudController::class, 'store'])-
 Route::delete('destroy-crud/{id}', [App\Http\Controllers\CrudController::class, 'destroy'])->name('crud.destroy');
 Route::put('put-crud/{id}', [App\Http\Controllers\CrudController::class, 'update'])->name('crud.update');
 
-Route::post('register-user', [App\Http\Controllers\Api\AuthController::class, 'register']);
-Route::post('login-user', [App\Http\Controllers\Api\AuthController::class, 'login']);
-
+Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+//API route for login user
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 Route::get('get-jurusan', [App\Http\Controllers\JurusanController::class,'index'])->name('jurusan.index');
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
     Route::get('get-Presensi', [App\Http\Controllers\Api\PresensiController::class, 'getPresensis']);
     Route::post('save-presensi', [App\Http\Controllers\API\PresensiController::class, 'savePresensi']);
 });
