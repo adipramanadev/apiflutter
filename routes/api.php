@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PegawaiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,17 +27,28 @@ Route::get('/', function () {
 //route apiPresensi
 
 
-Route::get('get-crud',[App\Http\Controllers\CrudController::class, 'index'])->name('crud.index');
-Route::post('store-crud',[App\Http\Controllers\CrudController::class, 'store'])->name('crud.store');
-Route::delete('destroy-crud/{id}', [App\Http\Controllers\CrudController::class, 'destroy'])->name('crud.destroy');
-Route::put('put-crud/{id}', [App\Http\Controllers\CrudController::class, 'update'])->name('crud.update');
+// Route::get('get-crud',[App\Http\Controllers\CrudController::class, 'index'])->name('crud.index');
+// Route::post('store-crud',[App\Http\Controllers\CrudController::class, 'store'])->name('crud.store');
+// Route::delete('destroy-crud/{id}', [App\Http\Controllers\CrudController::class, 'destroy'])->name('crud.destroy');
+// Route::put('put-crud/{id}', [App\Http\Controllers\CrudController::class, 'update'])->name('crud.update');
 
-Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
-//API route for login user
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
-Route::get('get-jurusan', [App\Http\Controllers\JurusanController::class,'index'])->name('jurusan.index');
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
-    Route::get('get-Presensi', [App\Http\Controllers\Api\PresensiController::class, 'getPresensis']);
-    Route::post('save-presensi', [App\Http\Controllers\API\PresensiController::class, 'savePresensi']);
+// Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+// //API route for login user
+// Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+// Route::get('get-jurusan', [App\Http\Controllers\JurusanController::class,'index'])->name('jurusan.index');
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+//     Route::get('get-Presensi', [App\Http\Controllers\Api\PresensiController::class, 'getPresensis']);
+//     Route::post('save-presensi', [App\Http\Controllers\API\PresensiController::class, 'savePresensi']);
+// });
+
+
+//rute untuk pegawai 
+Route::get('hello', function () {
+     return response()->json([
+        'msg'=>true, 
+        'data' => 'Hello, World!'
+     ]);
 });
+
+Route::get('get-pegawai', [PegawaiController::class, 'index']);
